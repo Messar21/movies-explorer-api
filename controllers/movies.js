@@ -31,7 +31,8 @@ const createMovie = (req, res, next) => {
 };
 
 const getMovies = (req, res, next) => {
-  Movies.find({})
+  const { _id } = req.user;
+  Movies.find({ owner: _id })
     .populate('owner')
     .then((movies) => {
       res.status(httpStatus.OK).send(movies);

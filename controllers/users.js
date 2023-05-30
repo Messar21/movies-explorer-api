@@ -67,7 +67,12 @@ const updateUser = (req, res, next) => {
     .then((user) => {
       res.status(httpStatus.OK).send(user);
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.code === 11000) {
+        return next(new ConflictError(existErrorMessage));
+      }
+      return next(err);
+    });
 };
 
 module.exports = {
