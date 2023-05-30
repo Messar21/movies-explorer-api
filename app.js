@@ -12,7 +12,7 @@ const { handlerErrors } = require('./middlewares/handlerErrors');
 const { loginValidation, registrationValidation } = require('./utils/requestValidation');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3100 } = process.env;
 const { NODE_ENV, URL_DB } = process.env;
 
 const mongodbUrl = NODE_ENV === 'production' ? URL_DB : devDbUrl;
