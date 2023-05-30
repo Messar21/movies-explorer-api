@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { RegExpUrl } = require('../utils/RegExpUrl');
 
 const movieSchema = new mongoose.Schema({
   country: {
@@ -25,10 +26,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (url) => {
-        const regex = /(http|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:~+#-]*[\w@?^=%&~+#-])/;
-        return regex.test(url);
-      },
+      validator: (url) => RegExpUrl.test(url),
       message: 'Некорректная ссылка',
     },
   },
@@ -36,10 +34,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (url) => {
-        const regex = /(http|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:~+#-]*[\w@?^=%&~+#-])/;
-        return regex.test(url);
-      },
+      validator: (url) => RegExpUrl.test(url),
       message: 'Некорректная ссылка',
     },
   },
@@ -47,10 +42,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (url) => {
-        const regex = /(http|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:~+#-]*[\w@?^=%&~+#-])/;
-        return regex.test(url);
-      },
+      validator: (url) => RegExpUrl.test(url),
       message: 'Некорректная ссылка',
     },
   },
