@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 
+const { devDbUrl } = require('./utils/config');
 const router = require('./routes');
 const { cors } = require('./middlewares/cors');
 const { login, createUser } = require('./controllers/users');
@@ -12,8 +13,11 @@ const { loginValidation, registrationValidation } = require('./utils/requestVali
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
+const { NODE_ENV, URL_DB } = process.env;
 
-mongoose.connect('mongodb://127.0.0.1/bitfilmsdb');
+const mongodbUrl = NODE_ENV === 'production' ? URL_DB : devDbUrl;
+
+mongoose.connect(mongodbUrl);
 
 const app = express();
 

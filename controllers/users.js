@@ -5,6 +5,7 @@ const { generateJWT } = require('../utils/generateJWT');
 const ConflictError = require('../utils/errors/conflict-error');
 const NotFoundError = require('../utils/errors/not-found-error');
 const Unauthorised = require('../utils/errors/unauth-error');
+const { existErrorMessage, loginErrorMessage, notFoundUserMessage } = require('../utils/constants');
 
 const createUser = (req, res, next) => {
   const { name, email, password } = req.body;
@@ -21,7 +22,7 @@ const createUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.code === 11000) {
-        return next(new ConflictError('Такой пользователь уже существует'));
+        return next(new ConflictError(existErrorMessage));
       }
       return next(err);
     });
@@ -32,12 +33,12 @@ const login = (req, res, next) => {
   User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        throw new Unauthorised('Неправильные почта или пароль');
+        throw new Unauthorised(loginErrorMessage);
       }
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            throw new Unauthorised('Неправильные почта или пароль');
+            throw new Unauthorised(loginErrorMessage);
           }
           const token = generateJWT(user._id);
           return res.status(httpStatus.OK).send({ token });
@@ -52,7 +53,7 @@ const getUser = (req, res, next) => {
   User.findById(_id)
     .then((user) => {
       if (!user) {
-        throw new NotFoundError('Пользователь не найден');
+        throw new NotFoundError(notFoundUserMessage);
       }
       return res.status(httpStatus.OK).send(user);
     })

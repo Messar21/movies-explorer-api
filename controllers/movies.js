@@ -2,6 +2,7 @@ const httpStatus = require('http-status');
 const Movies = require('../models/movies');
 const NotFoundError = require('../utils/errors/not-found-error');
 const ForbiddenError = require('../utils/errors/forbidden-error');
+const { movieNotFoundMessage, forbiddenErrorMessage, deleteMovieMessage } = require('../utils/constants');
 
 const createMovie = (req, res, next) => {
   const {
@@ -44,16 +45,16 @@ const deleteMovie = (req, res, next) => {
   Movies.findOne({ _id: movieId })
     .then((movie) => {
       if (!movie) {
-        throw new NotFoundError('Фильм с таким _id не найден');
+        throw new NotFoundError(movieNotFoundMessage);
       }
     })
     .then(() => {
       Movies.findOneAndDelete({ _id: movieId, owner: userId })
         .then((movie) => {
           if (!movie) {
-            throw new ForbiddenError('Доступ запрещен!');
+            throw new ForbiddenError(forbiddenErrorMessage);
           }
-          res.status(httpStatus.OK).send({ message: 'Фильм удален' });
+          res.status(httpStatus.OK).send({ message: deleteMovieMessage });
         })
         .catch(next);
     })
