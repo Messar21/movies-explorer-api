@@ -1,14 +1,16 @@
 const router = require('express').Router();
 const NotFoundError = require('../utils/errors/not-found-error');
-const { getMovies, createMovie, deleteMovie } = require('../controllers/movies');
-const { postMovieValidation, deleteMovieValidation, patchUserValidation } = require('../utils/requestValidation');
-const { getUser, updateUser } = require('../controllers/users');
+const usersRouter = require('./users');
+const moviesRouter = require('./movies');
+const { login, createUser } = require('../controllers/users');
+const { auth } = require('../middlewares/auth');
+const { loginValidation, registrationValidation } = require('../utils/requestValidation');
 
-router.get('/users/me', getUser);
-router.patch('/users/me', patchUserValidation, updateUser);
-router.get('/movies', getMovies);
-router.post('/movies', postMovieValidation, createMovie);
-router.delete('/movies/:movieId', deleteMovieValidation, deleteMovie);
+router.post('/signin', loginValidation, login);
+router.post('/signup', registrationValidation, createUser);
+router.use(auth);
+router.use('/users', usersRouter);
+router.use('/movies', moviesRouter);
 
 router.use('*', (req, err, next) => next(new NotFoundError('Неправильно задан Url')));
 
