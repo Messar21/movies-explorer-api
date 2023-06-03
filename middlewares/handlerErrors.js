@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const { serverErrorMessage } = require('../utils/constants');
 
 const handlerErrors = (err, req, res, next) => {
   const { statusCode = httpStatus.INTERNAL_SERVER_ERROR, message } = err;
@@ -6,7 +7,7 @@ const handlerErrors = (err, req, res, next) => {
     .status(statusCode)
     .send({
       message: statusCode === httpStatus.INTERNAL_SERVER_ERROR
-        ? 'На сервере произошла ошибка'
+        ? serverErrorMessage
         : message,
     });
   next();

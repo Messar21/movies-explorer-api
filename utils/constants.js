@@ -5,6 +5,7 @@ const authErrorMessage = 'Необходима авторизация';
 const movieNotFoundMessage = 'Фильм с таким _id не найден';
 const forbiddenErrorMessage = 'Доступ запрещен!';
 const deleteMovieMessage = 'Фильм удален';
+const serverErrorMessage = 'На сервере произошла ошибка';
 
 module.exports = {
   existErrorMessage,
@@ -14,4 +15,5 @@ module.exports = {
   movieNotFoundMessage,
   forbiddenErrorMessage,
   deleteMovieMessage,
+  serverErrorMessage,
 };
