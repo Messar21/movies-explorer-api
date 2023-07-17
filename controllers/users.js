@@ -5,7 +5,14 @@ const { generateJWT } = require('../utils/generateJWT');
 const ConflictError = require('../utils/errors/conflict-error');
 const NotFoundError = require('../utils/errors/not-found-error');
 const Unauthorised = require('../utils/errors/unauth-error');
-const { existErrorMessage, loginErrorMessage, notFoundUserMessage } = require('../utils/constants');
+const BadRequest = require('../utils/errors/bad-req-error');
+const {
+  existErrorMessage,
+  loginErrorMessage,
+  notFoundUserMessage,
+  registrationErrorMessage,
+  updateUserErrorMessage,
+} = require('../utils/constants');
 
 const createUser = (req, res, next) => {
   const { name, email, password } = req.body;
@@ -24,7 +31,7 @@ const createUser = (req, res, next) => {
       if (err.code === 11000) {
         return next(new ConflictError(existErrorMessage));
       }
-      return next(err);
+      return next(new BadRequest(registrationErrorMessage));
     });
 };
 
@@ -71,7 +78,7 @@ const updateUser = (req, res, next) => {
       if (err.code === 11000) {
         return next(new ConflictError(existErrorMessage));
       }
-      return next(err);
+      return next(new BadRequest(updateUserErrorMessage));
     });
 };
 

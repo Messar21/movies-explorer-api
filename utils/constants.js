@@ -1,7 +1,10 @@
-const existErrorMessage = 'Такой пользователь уже существует';
-const loginErrorMessage = 'Неправильные почта или пароль';
+const existErrorMessage = 'Пользователь с таким email уже существует.';
+const loginErrorMessage = 'Вы ввели неправильный логин или пароль.';
 const notFoundUserMessage = 'Пользователь не найден';
-const authErrorMessage = 'Необходима авторизация';
+const registrationErrorMessage = 'При регистрации пользователя произошла ошибка.';
+const updateUserErrorMessage = 'При обновлении профиля произошла ошибка.';
+const noTokenErrorMessage = 'При авторизации произошла ошибка. Токен не передан или передан не в том формате.';
+const invalidTokenErrorMessage = 'При авторизации произошла ошибка. Переданный токен некорректен.';
 const movieNotFoundMessage = 'Фильм с таким _id не найден';
 const forbiddenErrorMessage = 'Доступ запрещен!';
 const deleteMovieMessage = 'Фильм удален';
@@ -11,7 +14,10 @@ module.exports = {
   existErrorMessage,
   loginErrorMessage,
   notFoundUserMessage,
-  authErrorMessage,
+  registrationErrorMessage,
+  updateUserErrorMessage,
+  noTokenErrorMessage,
+  invalidTokenErrorMessage,
   movieNotFoundMessage,
   forbiddenErrorMessage,
   deleteMovieMessage,
